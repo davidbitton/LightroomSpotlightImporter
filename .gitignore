@@ -13,3 +13,19 @@ build/*
 xcuserdata
 profile
 *.moved-aside
+
+# Modern Xcode / build
+build/
+DerivedData/
+*.xcuserdata
+*.xccheckout
+*.moved-aside
+*.hmap
+*.ipa
+*.dSYM.zip
+*.dSYM
+.DS_Store
+
+# Legacy tree that should not return
+Build/
+*.pkg
