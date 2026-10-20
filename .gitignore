@@ -1,31 +1,41 @@
-# Xcode
-build/*
-*.pbxuser
-!default.pbxuser
-*.mode1v3
-!default.mode1v3
-*.mode2v3
-!default.mode2v3
-*.perspectivev3
-!default.perspectivev3
-*.xcworkspace
-!default.xcworkspace
-xcuserdata
-profile
-*.moved-aside
-
-# Modern Xcode / build
+# Build outputs
 build/
+Build/
 DerivedData/
-*.xcuserdata
+dist/
+*.mdimporter
+!**/fixtures/**
+
+# Xcode / IDE
+*.xcodeproj/*
+!*.xcodeproj/project.pbxproj
+*.xcworkspace
+xcuserdata/
+*.xcuserstate
 *.xccheckout
-*.moved-aside
 *.hmap
 *.ipa
-*.dSYM.zip
 *.dSYM
+*.dSYM.zip
 .DS_Store
+*.swp
+*~
 
-# Legacy tree that should not return
-Build/
+# Packages / installers
 *.pkg
+*.dmg
+*.zip
+!tests/fixtures/**
+
+# Test artifacts
+tests/fixtures/*.lrcat
+tests/fixtures/*.lrcat-shm
+tests/fixtures/*.lrcat-wal
+tests/fixtures/*.lrcat-journal
+tests/out/
+
+# Tooling
+.clangd
+compile_commands.json
+
+tests/fixtures/matrix/
