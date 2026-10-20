@@ -214,6 +214,9 @@ ULONG MetadataImporterPluginRelease(void *thisInstance)
 // -----------------------------------------------------------------------------
 //	Implementation of the factory function for this type.
 //
+// Must be default-visibility: CFPlugin resolves this by symbol name from Info.plist.
+// Building with -fvisibility=hidden otherwise leaves it local and mdimport finds "no plugIn".
+__attribute__((visibility("default")))
 void *MetadataImporterPluginFactory(CFAllocatorRef allocator,CFUUIDRef typeID)
 {
     MetadataImporterPluginType *result;
