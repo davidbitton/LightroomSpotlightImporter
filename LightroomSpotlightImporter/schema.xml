@@ -30,19 +30,26 @@
         are CFNumber, CFDate, CFBoolean and CFData.
     </note>
     <attributes>
+        <!-- multivalued CFString: exposed to mdls / mdfind; Spotlight menu coverage varies by OS -->
         <attribute name="com_adobe_lightroom_library_files" multivalued="true" type="CFString"/>
     </attributes>
     
     <types>
         <type name="com.adobe.lightroom.library">
             <note>
-                The keys that this metadata importer handles.
+                Keys this metadata importer handles. Also sets standard keys
+                (kMDItemKeywords, kMDItemComment, kMDItemTextContent) in code.
             </note>
             <allattrs>
                 com_adobe_lightroom_library_files
+                kMDItemKeywords
+                kMDItemComment
+                kMDItemTextContent
+                kMDItemKind
             </allattrs>
             <displayattrs>
                 com_adobe_lightroom_library_files
+                kMDItemKeywords
             </displayattrs>
         </type>
     </types>
