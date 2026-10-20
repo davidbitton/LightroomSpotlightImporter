@@ -1,4 +1,4 @@
-# Lightroom Spotlight Importer — Makefile (x86_64 Intel Mac)
+# Lightroom Spotlight Importer — Makefile (universal: arm64 + x86_64)
 # Requires Apple SDK + clang (Xcode or CLT). No Xcode GUI.
 
 PRODUCT       := LightroomSpotlightImporter
@@ -11,12 +11,14 @@ HOST_APP      := $(BUILD_DIR)/$(HOST_APP_NAME)
 MACOS_DIR     := $(BUNDLE)/Contents/MacOS
 RES_DIR       := $(BUNDLE)/Contents/Resources
 
-ARCHS         ?= x86_64
+# Space-separated; override e.g. `make ARCHS=x86_64` for a single-arch build.
+ARCHS         ?= arm64 x86_64
+ARCH_FLAGS    := $(foreach a,$(ARCHS),-arch $(a))
 DEPLOY_TARGET ?= 11.0
 SDKROOT       ?= $(shell xcrun --show-sdk-path)
 CC            ?= $(shell xcrun -f clang)
 
-CFLAGS := -arch $(ARCHS) \
+CFLAGS := $(ARCH_FLAGS) \
 	-isysroot $(SDKROOT) \
 	-mmacosx-version-min=$(DEPLOY_TARGET) \
 	-fobjc-arc \
@@ -25,7 +27,7 @@ CFLAGS := -arch $(ARCHS) \
 	-Wall -Wextra -Wno-unused-parameter \
 	-I$(SRC_DIR)
 
-LDFLAGS := -arch $(ARCHS) \
+LDFLAGS := $(ARCH_FLAGS) \
 	-isysroot $(SDKROOT) \
 	-mmacosx-version-min=$(DEPLOY_TARGET) \
 	-bundle \
@@ -81,7 +83,7 @@ host: $(BUNDLE)
 	@mkdir -p "$(HOST_APP)/Contents/MacOS" \
 		"$(HOST_APP)/Contents/Resources" \
 		"$(HOST_APP)/Contents/Library/Spotlight"
-	$(CC) -arch $(ARCHS) -isysroot $(SDKROOT) -mmacosx-version-min=$(DEPLOY_TARGET) \
+	$(CC) $(ARCH_FLAGS) -isysroot $(SDKROOT) -mmacosx-version-min=$(DEPLOY_TARGET) \
 		HostApp/main.c -o "$(HOST_APP)/Contents/MacOS/Lightroom Spotlight Importer"
 	cp HostApp/Info.plist "$(HOST_APP)/Contents/Info.plist"
 	cp HostApp/AppIcon.icns "$(HOST_APP)/Contents/Resources/AppIcon.icns"

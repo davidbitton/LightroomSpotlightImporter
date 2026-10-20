@@ -6,7 +6,8 @@ make clean all
 VERSION=$(/usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' \
   LightroomSpotlightImporter/LightroomSpotlightImporter-Info.plist 2>/dev/null || echo "2.0.0")
 mkdir -p dist
-ZIP="$ROOT/dist/LightroomSpotlightImporter-${VERSION}-x86_64.zip"
+ARCH_TAG=$(lipo -archs build/LightroomSpotlightImporter.mdimporter/Contents/MacOS/LightroomSpotlightImporter | tr ' ' '-')
+ZIP="$ROOT/dist/LightroomSpotlightImporter-${VERSION}-${ARCH_TAG}.zip"
 (
   cd build
   zip -ry "$ZIP" \
@@ -20,7 +21,7 @@ STAGE="$ROOT/dist/stage"
 rm -rf "$STAGE"
 mkdir -p "$STAGE/Applications"
 cp -R "build/Lightroom Spotlight Importer.app" "$STAGE/Applications/"
-PKG="$ROOT/dist/LightroomSpotlightImporter-${VERSION}-x86_64.pkg"
+PKG="$ROOT/dist/LightroomSpotlightImporter-${VERSION}-${ARCH_TAG}.pkg"
 pkgbuild \
   --root "$STAGE" \
   --identifier com.codenoevil.LightroomSpotlightImporter.Host \
